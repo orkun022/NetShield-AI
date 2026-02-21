@@ -224,17 +224,6 @@ python -m pytest tests/ -v
 
 ---
 
-## 🚀 Deployment
-
-The web interface is deployed on **Streamlit Cloud**:
-
-```bash
-# Run locally
-streamlit run app/app.py
-```
-
----
-
 ## 📚 References
 
 1. Tavallaee, M., et al. (2009). *A detailed analysis of the KDD CUP 99 data set*. IEEE Symposium on CISDA.
