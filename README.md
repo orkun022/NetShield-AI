@@ -6,6 +6,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)](https://python.org)
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-1.3%2B-orange?logo=scikit-learn&logoColor=white)](https://scikit-learn.org)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.28%2B-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 *Detect network intrusions and cyber attacks in real-time using Random Forest classification with 41 traffic features.*
@@ -63,6 +64,57 @@ Cyber attacks on network infrastructure are growing at an alarming rate — **2,
 
 ⚡ Therefore: RECALL (TP / (TP + FN)) is the most important metric
    → High Recall = Low False Negative = Fewer missed attacks
+```
+
+---
+
+## 🏗️ Architecture
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                    NetShield-AI Pipeline                      │
+└──────────────────────────────────────────────────────────────┘
+
+                ┌──────────────────┐
+                │ Raw Network     │
+                │ Traffic (CSV)   │
+                │ 41 features     │
+                └────────┬─────────┘
+                         │
+                         ▼
+                ┌──────────────────┐
+                │ Preprocessing   │
+                │                 │
+                │ One-Hot Encode  │
+                │ (protocol_type, │
+                │  service, flag) │
+                │ StandardScaler  │
+                └────────┬─────────┘
+                         │
+              ┌─────────┴─────────┐
+              ▼                       ▼
+┌────────────────────┐   ┌────────────────────┐
+│   SUPERVISED         │   │   UNSUPERVISED       │
+│                      │   │                      │
+│   Random Forest      │   │   Isolation Forest   │
+│   (200 estimators)   │   │   (Anomaly Detection)│
+│                      │   │                      │
+│   → Attack classify  │   │   → Normal/Anomaly   │
+│   → 4 categories     │   │   → Binary only      │
+│   → ~99% recall     │   │   → ~85% recall      │
+└──────────┬─────────┘   └──────────┬─────────┘
+              │                       │
+              └─────────┬─────────┘
+                        ▼
+              ┌────────────────────┐
+              │   Comparative       │
+              │   Evaluation        │
+              │                     │
+              │   Confusion Matrix  │
+              │   ROC-AUC Curves    │
+              │   Classification    │
+              │   Report            │
+              └────────────────────┘
 ```
 
 ---
@@ -125,7 +177,7 @@ NetShield-AI/
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/NetShield-AI.git
+git clone https://github.com/orkun022/NetShield-AI.git
 cd NetShield-AI
 
 # Create virtual environment
@@ -168,7 +220,18 @@ python -m pytest tests/ -v
 | **Pandas** | Data manipulation |
 | **NumPy** | Numerical computing |
 | **Matplotlib & Seaborn** | Visualization |
-| **Joblib** | Model serialization |
+| **Streamlit** | Interactive web dashboard |
+
+---
+
+## 🚀 Deployment
+
+The web interface is deployed on **Streamlit Cloud**:
+
+```bash
+# Run locally
+streamlit run app/app.py
+```
 
 ---
 
